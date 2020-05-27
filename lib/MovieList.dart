@@ -5,15 +5,25 @@ import 'MovieRepo.dart';
 import 'MovieDetails.dart';
 
 class MovieList extends StatefulWidget {
+  List<Movie> movies;
+
+  MovieList(List<Movie> movies) {
+    this.movies = movies;
+  }
+
   @override
   State<StatefulWidget> createState() {
-    return _movieList();
+    return _movieList(this.movies);
   }
 }
 
-List<Movie> movieList = MovieRepo.LoadAll();
-
 class _movieList extends State<MovieList> {
+  List<Movie> movieList;
+
+  _movieList(List<Movie> movies) {
+    this.movieList = movies;
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;

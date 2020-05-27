@@ -1,21 +1,33 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'FirstPage.dart';
+import 'Login.dart';
 import 'SecondPage.dart';
 import 'ThirdPage.dart';
+import 'Profile.dart';
 
 void main() => runApp(MaterialApp(
-      home: MyHomePage(),
+      home: Login(),
     ));
 
 class MyHomePage extends StatefulWidget {
+  int tab;
+  MyHomePage(int i) {
+    this.tab = i;
+  }
+
   State<StatefulWidget> createState() {
-    return _HomeState();
+    return _HomeState(this.tab);
   }
 }
 
 class _HomeState extends State<MyHomePage> {
   int currentTabIndex = 0;
+  int _tabIndex = 0;
+
+  _HomeState(int tab) {
+    this._tabIndex = tab;
+  }
 
   onTapped(int index) {
     setState(() {
@@ -27,10 +39,8 @@ class _HomeState extends State<MyHomePage> {
     FirstPage(),
     SecondPage(),
     ThirdPage(),
-    ThirdPage(),
+    Profile(),
   ];
-
-  int _tabIndex = 0;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -40,11 +50,13 @@ class _HomeState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       body: tabs[_tabIndex],
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Color.fromRGBO(147, 172, 243, 1),
         currentIndex: _tabIndex,
+        unselectedItemColor: Colors.black,
+        selectedItemColor: Colors.white,
         onTap: _onItemTapped,
         type: BottomNavigationBarType.fixed,
         items: [
@@ -68,43 +80,4 @@ class _HomeState extends State<MyHomePage> {
       ),
     );
   }
-
-  /*@override
-  Widget build(BuildContext context) {
-    return BottomNavigationBarSc(
-        tabBar: CupertinoTabBar(items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text("Home"),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.local_movies),
-            title: Text("Movies"),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.confirmation_number),
-            title: Text("Tickets"),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            title: Text("Profile"),
-          )
-        ]),
-        tabBuilder: (context, index) {
-          switch (index) {
-            case 0:
-              return FirstPage();
-              break;
-            case 1:
-              return SecondPage();
-              break;
-            case 2:
-              return ThirdPage();
-              break;
-            default:
-              return FirstPage();
-              break;
-          }
-        });
-  }*/
 }

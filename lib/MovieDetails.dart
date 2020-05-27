@@ -1,8 +1,11 @@
+import 'package:cineticketfinal/AddReview.dart';
+import 'package:cineticketfinal/BuyTicket.dart';
 import 'package:cineticketfinal/Movie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cineticketfinal/ReviewPage.dart';
 import 'package:cineticketfinal/MovieRepo.dart';
+import 'AddReview.dart';
 
 class MovieDetails extends StatefulWidget {
   Movie _movie;
@@ -16,6 +19,8 @@ class MovieDetails extends StatefulWidget {
     return _MovieDetails(_movie);
   }
 }
+
+Color selected = Color.fromRGBO(147, 172, 243, 1);
 
 class _MovieDetails extends State<MovieDetails> {
   Movie movie;
@@ -41,6 +46,15 @@ class _MovieDetails extends State<MovieDetails> {
       appBar: CupertinoNavigationBar(
         transitionBetweenRoutes: false,
         backgroundColor: Colors.transparent,
+        trailing: GestureDetector(
+          onTap: () {
+            _settingModalBottomSheet(context);
+          },
+          child: Icon(
+            Icons.share,
+            color: Colors.lightBlue,
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -79,7 +93,7 @@ class _MovieDetails extends State<MovieDetails> {
                             RaisedButton(
                               padding: EdgeInsets.symmetric(horizontal: 20),
                               onPressed: () {
-                                print("ola");
+                                print("Trailler url");
                               },
                               child: Row(
                                 children: <Widget>[
@@ -91,7 +105,7 @@ class _MovieDetails extends State<MovieDetails> {
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 10),
                             ),
-                            Text("20 min"),
+                            Text(movie.getTime().toString() + " min"),
                           ],
                         ),
                       ],
@@ -121,11 +135,11 @@ class _MovieDetails extends State<MovieDetails> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(MovieRepo.getTicketQuant(movie).toString() + " tickets"),
+                Text(MovieRepo.getTicketQuant(movie).toString() + " ticket(s)"),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 50),
                 ),
-                Text("PG-13")
+                Text(movie.getPg())
               ],
             ),
             Padding(
@@ -137,7 +151,10 @@ class _MovieDetails extends State<MovieDetails> {
                 style: TextStyle(fontSize: 15),
               ),
               padding: EdgeInsets.symmetric(horizontal: 100, vertical: 15),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => BuyTickets(movie)));
+              },
               shape: RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(18.0),
                 side: BorderSide(color: Colors.black),
@@ -200,6 +217,9 @@ class _MovieDetails extends State<MovieDetails> {
                 ],
               ),
             ),
+            Padding(
+              padding: EdgeInsets.all(2),
+            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -218,7 +238,12 @@ class _MovieDetails extends State<MovieDetails> {
                   padding: EdgeInsets.all(15),
                 ),
                 RaisedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AddReview(movie)));
+                  },
                   child: Text("Add a review"),
                   padding: EdgeInsets.symmetric(horizontal: 40),
                 ),
@@ -232,7 +257,9 @@ class _MovieDetails extends State<MovieDetails> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 RaisedButton(
-                  color: (_tabIndex == 0) ? Colors.amber : Colors.white70,
+                  color: (_tabIndex == 0)
+                      ? Color.fromRGBO(147, 172, 243, 1)
+                      : Colors.white70,
                   child: Text(
                     "Cast",
                   ),
@@ -249,7 +276,7 @@ class _MovieDetails extends State<MovieDetails> {
                   padding: EdgeInsets.all(5),
                 ),
                 RaisedButton(
-                  color: (_tabIndex == 1) ? Colors.amber : Colors.white70,
+                  color: (_tabIndex == 1) ? selected : Colors.white70,
                   child: Text(
                     "Crew",
                   ),
@@ -266,7 +293,7 @@ class _MovieDetails extends State<MovieDetails> {
                   padding: EdgeInsets.all(5),
                 ),
                 RaisedButton(
-                  color: (_tabIndex == 2) ? Colors.amber : Colors.white70,
+                  color: (_tabIndex == 2) ? selected : Colors.white70,
                   child: Text(
                     "Studio",
                   ),
@@ -283,7 +310,7 @@ class _MovieDetails extends State<MovieDetails> {
                   padding: EdgeInsets.all(5),
                 ),
                 RaisedButton(
-                  color: (_tabIndex == 3) ? Colors.amber : Colors.white70,
+                  color: (_tabIndex == 3) ? selected : Colors.white70,
                   child: Text(
                     "Genres",
                   ),
@@ -309,20 +336,135 @@ class _MovieDetails extends State<MovieDetails> {
   }
 }
 
+void _settingModalBottomSheet(BuildContext context) {
+  showModalBottomSheet(
+      context: context,
+      builder: (BuildContext bc) {
+        return Container(
+          child: new Wrap(
+            children: <Widget>[
+              Container(
+                height: 120,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: <Widget>[
+                    Container(
+                      height: 120,
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            height: 70,
+                            child: Image.network(
+                                "https://lh3.googleusercontent.com/Mey6KP57RsOKDdvUfcEPDHhT-I8GBYM41trasLfpueg4lQb88r8PCZR00ZceMZGmlIo",
+                                fit: BoxFit.contain),
+                          ),
+                          Text("Messages")
+                        ],
+                      ),
+                    ),
+                    Container(
+                      height: 120,
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            height: 65,
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 8),
+                            child: Image.network(
+                                "https://cdn4.iconfinder.com/data/icons/social-media-icons-the-circle-set/48/twitter_circle-512.png",
+                                fit: BoxFit.contain),
+                          ),
+                          Text("Twiter"),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      height: 120,
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 8),
+                            height: 65,
+                            child: Image.network(
+                                "https://cdn3.iconfinder.com/data/icons/popular-services-brands/512/whatsapp-512.png",
+                                fit: BoxFit.contain),
+                          ),
+                          Text("Messages")
+                        ],
+                      ),
+                    ),
+                    Container(
+                      height: 120,
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 8),
+                            height: 65,
+                            child: Image.network(
+                                "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Circle-icons-mail.svg/1024px-Circle-icons-mail.svg.png",
+                                fit: BoxFit.contain),
+                          ),
+                          Text("Email")
+                        ],
+                      ),
+                    ),
+                    Container(
+                      height: 120,
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            height: 75,
+                            child: Image.network(
+                                "https://cdn.icon-icons.com/icons2/642/PNG/512/facebook_icon-icons.com_59205.png",
+                                fit: BoxFit.contain),
+                          ),
+                          Text("Facebook")
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              new ListTile(
+                title: new Text("Copy link"),
+                trailing: Icon(Icons.content_copy),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              new ListTile(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                title: new Text("Cancel"),
+                trailing: Icon(Icons.cancel),
+              ),
+            ],
+          ),
+        );
+      });
+}
+
 Graph(List<int> reviewsCount, maxWidth, maxHeight) {
   maxHeight = maxHeight / 6;
   int max =
       reviewsCount.reduce((curr, next) => curr > next ? curr : next); // Max
   return Row(
-    mainAxisAlignment: MainAxisAlignment.center,
+    mainAxisAlignment: MainAxisAlignment.end,
     crossAxisAlignment: CrossAxisAlignment.end,
     children: <Widget>[
       for (int i in reviewsCount)
         Container(
-          height: i * maxHeight / max,
+          height: i * maxHeight / max + 2,
           width: maxWidth / 15,
           decoration: BoxDecoration(
-            color: Colors.amber,
+            color: selected,
             border: Border.all(color: Colors.white, width: 0.50),
           ),
         )

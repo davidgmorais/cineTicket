@@ -6,15 +6,25 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'MovieDetails.dart';
 
 class MovieCarousel extends StatefulWidget {
+  List<Movie> movies;
+  MovieCarousel(List<Movie> movies) {
+    this.movies = movies;
+  }
+
   @override
   State<StatefulWidget> createState() {
-    return _carousel();
+    return _carousel(this.movies);
   }
 }
 
 List<Movie> movieList = MovieRepo.LoadAll();
 
 class _carousel extends State<MovieCarousel> {
+  List<Movie> movieList;
+  _carousel(List<Movie> movies) {
+    this.movieList = movies;
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;

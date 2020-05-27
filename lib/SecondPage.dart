@@ -1,12 +1,11 @@
-import 'dart:math';
-
-import 'package:cineticketfinal/FirstPage.dart';
+import 'package:cineticketfinal/BuyTicket.dart';
+import 'package:cineticketfinal/SearchPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'MovieDetails.dart';
 import 'package:cineticketfinal/MovieList.dart';
-import 'MovieRepo.dart';
+import 'Cinema.dart';
 import 'Movie.dart';
+import 'MovieRepo.dart';
 import 'MovieCarousel.dart';
 
 class SecondPage extends StatefulWidget {
@@ -15,6 +14,20 @@ class SecondPage extends StatefulWidget {
     return _SecondPage();
   }
 }
+
+List<Movie> movies = MovieRepo.LoadAll();
+String cinemaIndex, genreIndex;
+List<String> genres = [
+  "Action",
+  "Comedy",
+  "Romance",
+  "Thriller",
+  "Documentary",
+  "Musical",
+  "Sci-fi",
+  "Drama",
+  "Horror"
+];
 
 class _SecondPage extends State<SecondPage> {
   int _tabState = 0;
@@ -25,20 +38,21 @@ class _SecondPage extends State<SecondPage> {
     double screenWidth = MediaQuery.of(context).size.width;
 
     List<Widget> list = [
-      MovieList(),
-      MovieCarousel(),
+      MovieList(movies),
+      MovieCarousel(movies),
     ];
 
     return Scaffold(
       appBar: CupertinoNavigationBar(
         transitionBetweenRoutes: false,
-        trailing: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: <Widget>[
-            Icon(Icons.search),
-            Icon(Icons.tune),
-          ],
+        trailing: GestureDetector(
+          child: Icon(
+            Icons.search,
+          ),
+          onTap: () {
+            Navigator.push(context,
+                PageRouteBuilder(pageBuilder: (_, a1, a2) => SearchPage()));
+          },
         ),
         leading: Row(
           children: <Widget>[
@@ -48,7 +62,11 @@ class _SecondPage extends State<SecondPage> {
                   _tabState = 1;
                 });
               },
-              icon: Icon(Icons.view_carousel),
+              icon: Icon(Icons.view_carousel,
+                  size: 40,
+                  color: (_tabState == 1)
+                      ? Color.fromRGBO(147, 172, 243, 1)
+                      : null),
             ),
             IconButton(
               onPressed: () {
@@ -56,7 +74,11 @@ class _SecondPage extends State<SecondPage> {
                   _tabState = 0;
                 });
               },
-              icon: Icon(Icons.view_list),
+              icon: Icon(Icons.view_list,
+                  size: 40,
+                  color: (_tabState == 0)
+                      ? Color.fromRGBO(147, 172, 243, 1)
+                      : null),
             ),
           ],
         ),

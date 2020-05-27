@@ -23,7 +23,10 @@ class _ThirdPage extends State<ThirdPage> {
     return Scaffold(
       appBar: CupertinoNavigationBar(
         transitionBetweenRoutes: false,
-        leading: Icon(Icons.tune),
+        leading: GestureDetector(
+          child: Icon(Icons.tune),
+          onTap: () {},
+        ),
         middle: Text("Tickets"),
         trailing: Icon(Icons.help_outline),
       ),
@@ -71,7 +74,7 @@ class _ThirdPage extends State<ThirdPage> {
                             (_stateFront == 0)
                                 ? Container(
                                     padding: EdgeInsets.symmetric(
-                                        horizontal: 50, vertical: 25),
+                                        horizontal: 30, vertical: 25),
                                     child: Image.network(
                                       ticket.getMoviePoster(),
                                       fit: BoxFit.cover,
@@ -117,19 +120,76 @@ class _ThirdPage extends State<ThirdPage> {
                                           ],
                                         ),
                                         Padding(
-                                          padding: EdgeInsets.all(20),
+                                          padding: EdgeInsets.all(15),
                                         ),
-                                        Text(
-                                          "Room " + ticket.getRoom(),
-                                          style: TextStyle(fontSize: 20),
-                                          textAlign: TextAlign.start,
-                                        ),
-                                        Text(
-                                          "Seats " + ticket.getSeats(),
-                                          style: TextStyle(fontSize: 20),
+                                        Center(
+                                          child: Text(
+                                            "Seats: " + ticket.getSeats(),
+                                            style: TextStyle(fontSize: 18),
+                                          ),
                                         ),
                                         Padding(
-                                          padding: EdgeInsets.all(10),
+                                          padding: EdgeInsets.all(5),
+                                        ),
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            Text(
+                                              "Room: " + ticket.getRoom(),
+                                              style: TextStyle(fontSize: 16),
+                                              textAlign: TextAlign.start,
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 20),
+                                            ),
+                                            Text(
+                                              "Format: " + ticket.getFormat(),
+                                              style: TextStyle(fontSize: 16),
+                                            ),
+                                          ],
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.all(5),
+                                        ),
+                                        Container(
+                                          alignment: Alignment.center,
+                                          height: screenHeight / 22,
+                                          child: Text(
+                                            ((ticket.getNormal() > 0)
+                                                    ? "Normal (x" +
+                                                        ticket
+                                                            .getNormal()
+                                                            .toString() +
+                                                        "), "
+                                                    : "") +
+                                                ((ticket.getChild() > 0)
+                                                    ? "Child (x" +
+                                                        ticket
+                                                            .getChild()
+                                                            .toString() +
+                                                        "), "
+                                                    : "") +
+                                                ((ticket.getSenior() > 0)
+                                                    ? "Senior (x" +
+                                                        ticket
+                                                            .getSenior()
+                                                            .toString() +
+                                                        "), "
+                                                    : "") +
+                                                ((ticket.getTwofer() > 0)
+                                                    ? "Two for One (x" +
+                                                        ticket
+                                                            .getTwofer()
+                                                            .toString() +
+                                                        ")"
+                                                    : ""),
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(fontSize: 15),
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -144,7 +204,7 @@ class _ThirdPage extends State<ThirdPage> {
                             Expanded(
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: Color.fromRGBO(186, 40, 45, 1),
+                                  color: ticket.getColor(),
 
                                   /*border: Border(
                                       top: BorderSide(

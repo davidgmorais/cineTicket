@@ -4,13 +4,13 @@ class Review {
   String text;
   double rating;
   String userName;
-  bool containsSpoiler;
+  bool spoilers;
 
   Review(String text, double pop, String un, bool sp) {
     this.text = text;
     this.rating = pop;
     this.userName = un;
-    this.containsSpoiler = sp;
+    this.spoilers = sp;
   }
 
   String getReview() {
@@ -25,7 +25,7 @@ class Review {
     return this.userName;
   }
 
-  bool dosContainsSpoiler() {
-    return this.containsSpoiler;
+  bool containsSpoiler() {
+    return this.spoilers;
   }
 }

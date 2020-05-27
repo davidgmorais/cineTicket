@@ -1,3 +1,4 @@
+import 'package:cineticketfinal/CinemaList.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -5,12 +6,9 @@ import 'Movie.dart';
 import 'Cinema.dart';
 import 'MovieRepo.dart';
 import 'MovieDetails.dart';
+import 'SearchPage.dart';
 
-List<Cinema> nearYou = [
-  new Cinema("NOS cinemas", "Palacio do gelo"),
-  new Cinema("Teatro Viriato", "rua das bocas, Viseu"),
-];
-
+List<Cinema> nearYou = MovieRepo.loadCinemas();
 List<Movie> forYou = MovieRepo.LoadForYou();
 List<Movie> movieList = MovieRepo.loadTrending();
 
@@ -27,23 +25,45 @@ class _FirstPage extends State<FirstPage> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
-    // TODO: implement build
     return CustomScrollView(
       slivers: <Widget>[
-        CupertinoSliverNavigationBar(
-          largeTitle: Text(
-            "What to watch",
-            textAlign: TextAlign.start,
-          ),
-          trailing: Container(
-            margin: EdgeInsets.symmetric(
-                vertical: screenHeight / 20, horizontal: 10),
-            child: Icon(Icons.search),
-          ),
-        ),
         SliverToBoxAdapter(
           child: Column(
             children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Container(
+                    child: Text(
+                      "What to watch",
+                      style:
+                          TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                    ),
+                    height: screenHeight / 7,
+                    width: screenWidth / 1.5,
+                    alignment: Alignment.bottomLeft,
+                    margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                              pageBuilder: (_, a1, a2) => SearchPage()));
+                    },
+                    child: Container(
+                      child: Icon(
+                        Icons.search,
+                        size: 35,
+                      ),
+                      height: screenHeight / 7,
+                      width: screenWidth / 7.5,
+                      alignment: Alignment.bottomRight,
+                      padding: EdgeInsets.only(bottom: 5),
+                      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                    ),
+                  ),
+                ],
+              ),
               Align(
                 alignment: Alignment(-0.89, 0),
                 child: Text(
@@ -183,34 +203,44 @@ class _FirstPage extends State<FirstPage> {
                   scrollDirection: Axis.horizontal,
                   itemCount: nearYou.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      decoration: new BoxDecoration(
-                        image: DecorationImage(
-                            image: NetworkImage(
-                                "https://us.123rf.com/450wm/michelangelus/michelangelus0903/michelangelus090300039/4409249-3d-picture-of-blue-cinema-seats.jpg?ver=6"),
-                            fit: BoxFit.cover),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 5,
-                            blurRadius: 7,
-                            offset: Offset(3, 3), // changes position of shadow
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    CinemaList(nearYou[index])));
+                      },
+                      child: Container(
+                        decoration: new BoxDecoration(
+                          image: DecorationImage(
+                              image: NetworkImage(
+                                  "https://us.123rf.com/450wm/michelangelus/michelangelus0903/michelangelus090300039/4409249-3d-picture-of-blue-cinema-seats.jpg?ver=6"),
+                              fit: BoxFit.cover),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 5,
+                              blurRadius: 7,
+                              offset:
+                                  Offset(3, 3), // changes position of shadow
+                            ),
+                          ],
+                          borderRadius: new BorderRadius.all(
+                            Radius.circular(10.0),
                           ),
-                        ],
-                        borderRadius: new BorderRadius.all(
-                          Radius.circular(10.0),
+                          color: Colors.blueGrey,
                         ),
-                        color: Colors.blueGrey,
-                      ),
-                      width: screenWidth / 2,
-                      margin: EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Center(
-                        child: Text(
-                          nearYou[index].getName(),
-                          softWrap: true,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
+                        width: screenWidth / 2,
+                        margin: EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Center(
+                          child: Text(
+                            nearYou[index].getName(),
+                            softWrap: true,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                            ),
                           ),
                         ),
                       ),

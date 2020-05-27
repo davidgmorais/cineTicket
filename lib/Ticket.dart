@@ -1,6 +1,12 @@
+import 'dart:collection';
+
+import 'package:cineticketfinal/MovieRepo.dart';
 import 'package:flutter/material.dart';
 
+import 'Movie.dart';
+
 class Ticket {
+  int id;
   String name;
   String poster;
   String date;
@@ -8,22 +14,75 @@ class Ticket {
   String cinema;
   String address;
   String room;
+  String format;
   List<String> seats;
   Color color;
 
-  Ticket(this.name, this.poster, this.date, this.time, this.cinema,
-      this.address, this.room, this.seats, this.color);
+  var categories = {"Normal": 0, "Child": 0, "Senior": 0, "Twofer": 0};
+
+  Ticket(this.id, this.date, this.time, this.cinema, this.address, this.room,
+      this.seats, this.format);
+
+  Ticket.withCategory(this.id, this.date, this.time, this.cinema, this.address,
+      this.room, this.seats, this.format, this.categories);
+
+  Ticket.expiredTicket(
+      this.name,
+      this.poster,
+      this.date,
+      this.time,
+      this.cinema,
+      this.address,
+      this.room,
+      this.seats,
+      this.format,
+      this.color,
+      this.categories);
 
   Color getColor() {
-    return this.color;
+    if (id == null) {
+      return this.color;
+    } else {
+      Movie m = MovieRepo.getMovie(this.id);
+
+      return m.getColor();
+    }
+  }
+
+  void addCategory(String cat, int qty) {
+    this.categories[cat] = qty;
+  }
+
+  int getNormal() {
+    return this.categories["Normal"];
+  }
+
+  int getChild() {
+    return this.categories["Child"];
+  }
+
+  int getSenior() {
+    return this.categories["Senior"];
+  }
+
+  int getTwofer() {
+    return this.categories["Twofer"];
   }
 
   String getMovieName() {
-    return this.name;
+    if (id == null) {
+      return this.name;
+    } else {
+      return MovieRepo.getMovie(this.id).getName();
+    }
   }
 
   String getMoviePoster() {
-    return this.poster;
+    if (id == null) {
+      return this.poster;
+    } else {
+      return MovieRepo.getMovie(this.id).getPoster();
+    }
   }
 
   String getDate() {
@@ -54,5 +113,14 @@ class Ticket {
     }
     s = s.substring(0, s.length - 2);
     return s;
+  }
+
+  void setSeat(List<String> list) {
+    this.seats = list;
+    this.room = "5";
+  }
+
+  String getFormat() {
+    return "2D subtittled";
   }
 }
