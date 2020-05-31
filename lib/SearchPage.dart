@@ -1,8 +1,8 @@
+import 'package:cineticketfinal/Cinema.dart';
 import 'package:cineticketfinal/Movie.dart';
 import 'package:cineticketfinal/MovieRepo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:cineticketfinal/Cinema.dart';
 
 import 'MovieDetails.dart';
 
@@ -37,7 +37,7 @@ class _SearchPage extends State<SearchPage> {
             Container(
               width: screenWidth / 1.2,
               child: TextField(
-                onSubmitted: (str) {
+                onChanged: (str) {
                   setState(() {
                     if (str != "") {
                       searchString = true;

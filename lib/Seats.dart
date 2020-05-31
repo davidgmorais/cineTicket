@@ -1,8 +1,8 @@
+import 'package:cineticketfinal/MovieRepo.dart';
 import 'package:cineticketfinal/Pay.dart';
 import 'package:cineticketfinal/Ticket.dart';
-import 'package:flutter/material.dart';
-import 'package:cineticketfinal/MovieRepo.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class Seats extends StatefulWidget {
   Ticket t;
@@ -36,6 +36,7 @@ class _Seats extends State<Seats> {
     double screenWidth = MediaQuery.of(context).size.width;
 
     seatChart = MovieRepo.getSeatCart();
+    placed = seatChart.where((element) => element == -1).length;
 
     int total = ticket.getNormal() +
         ticket.getChild() +
@@ -95,59 +96,104 @@ class _Seats extends State<Seats> {
                     ],
                   ),
                   Container(
-                      margin: EdgeInsets.symmetric(vertical: 10),
-                      height: screenHeight / 1.8,
-                      child: GridView.builder(
-                          itemCount: seatChart.length,
-                          scrollDirection: Axis.horizontal,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 10),
-                          itemBuilder: (BuildContext context, int index) {
-                            return GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  if ((total) > placed) {
-                                    placed++;
-                                    if (seatChart[index] == 0) {
-                                      seatChart[index] = 1;
-                                      String c =
-                                          alfa.reversed.toList()[index % 10];
-                                      String nr =
-                                          (index % seatChart.length ~/ 10)
+                    margin: EdgeInsets.symmetric(vertical: 10),
+                    height: screenHeight / 1.8,
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          child: Column(
+                            children: <Widget>[
+                              for (int i = 0; i < alfa.length; i++)
+                                Container(
+                                  margin: EdgeInsets.symmetric(vertical: 14),
+                                  child: Text(
+                                    (alfa.reversed.toList()[i]),
+                                  ),
+                                ),
+                            ],
+                          ),
+                          height: screenHeight,
+                          width: 40,
+                        ),
+                        Container(
+                          height: screenHeight,
+                          width: screenWidth - 80,
+                          child: GridView.builder(
+                              itemCount: seatChart.length,
+                              scrollDirection: Axis.horizontal,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 10),
+                              itemBuilder: (BuildContext context, int index) {
+                                Color c;
+                                switch (seatChart[index]) {
+                                  case -1:
+                                  case 1:
+                                    c = Colors.red;
+                                    break;
+                                  case 0:
+                                    c = Colors.blueAccent;
+                                    break;
+                                  default:
+                                    c = Colors.transparent;
+                                }
+                                return GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      if (seatChart[index] == 0) {
+                                        if ((total) > placed) {
+                                          placed++;
+                                          seatChart[index] = -1;
+                                          String c = alfa.reversed
+                                              .toList()[index % 10];
+                                          String nr = ((index %
+                                                      seatChart.length ~/
+                                                      10) +
+                                                  1)
                                               .toString();
+                                          print(nr + c);
+                                          selected.add(nr + c);
+                                        }
+                                      } else if (seatChart[index] == -1) {
+                                        if (placed > 0) {
+                                          placed--;
+                                          seatChart[index] = 0;
+                                          String c = alfa.reversed
+                                              .toList()[index % 10];
+                                          String nr = ((index %
+                                                      seatChart.length ~/
+                                                      10) +
+                                                  1)
+                                              .toString();
+                                          print(nr + c);
+                                          selected.remove(nr + c);
+                                        }
+                                      }
 
-                                      selected.add(nr + c);
-                                    }
-                                  }
-
-                                  if (total == placed) {
-                                    isButtonDisabled = false;
-                                  } else {
-                                    isButtonDisabled = true;
-                                  }
-                                });
-                              },
-                              child: Container(
-                                alignment: Alignment.center,
-                                color: (seatChart[index] != null)
-                                    ? (seatChart[index] == 0)
-                                        ? Color.fromRGBO(147, 172, 243, 1)
-                                        : (seatChart[index] >= 0)
-                                            ? Colors.red
-                                            : Colors.transparent
-                                    : Colors.transparent,
-                                margin: EdgeInsets.all(5),
-                                child: Text((seatChart[index] != null &&
-                                        seatChart[index] <= -1)
-                                    ? (seatChart[index] == -2)
-                                        ? ((index % seatChart.length ~/ 10))
+                                      if (total == placed) {
+                                        isButtonDisabled = false;
+                                      } else {
+                                        isButtonDisabled = true;
+                                      }
+                                    });
+                                  },
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    color: c,
+                                    margin: EdgeInsets.all(5),
+                                    child: Text((seatChart[index] != null &&
+                                            seatChart[index] == -2)
+                                        ? ((index % seatChart.length ~/ 10) + 1)
                                             .toString()
-                                        : alfa.reversed.toList()[index % 10]
-                                    : ""),
-                              ),
-                            );
-                          })),
+                                            .toString()
+                                        : ""),
+                                  ),
+                                );
+                              }),
+                        ),
+                      ],
+                    ),
+                  ),
 
                   //SCREEN
                   Container(

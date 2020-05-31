@@ -1,7 +1,8 @@
 import 'package:cineticketfinal/Review.dart';
-import 'package:flutter/material.dart';
-import 'Movie.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+import 'Movie.dart';
 import 'MovieRepo.dart';
 
 class AddReview extends StatefulWidget {
@@ -16,6 +17,16 @@ class AddReview extends StatefulWidget {
     return _AddReview(_movie);
   }
 }
+
+final snackBar = SnackBar(
+  content: Text('Yay! A SnackBar!'),
+  action: SnackBarAction(
+    label: 'Undo',
+    onPressed: () {
+      // Some code to undo the change.
+    },
+  ),
+);
 
 class _AddReview extends State<AddReview> {
   Movie movie;
@@ -256,6 +267,28 @@ class _AddReview extends State<AddReview> {
     Movie m = MovieRepo.getMovie(movie.getId());
     Review r = new Review(reviewText, rate / 2.0, "Albino Anselmo", spoilers);
     m.addReview(r);
-    Navigator.pop(context);
+    showDialog(
+        context: context,
+        builder: (context) {
+          Future.delayed(Duration(milliseconds: 1000), () {
+            Navigator.of(context).pop(true);
+            Navigator.of(context).pop(true);
+          });
+          return SimpleDialog(
+            children: <Widget>[
+              Icon(
+                Icons.check,
+                size: 50,
+                color: Colors.lightGreen,
+              ),
+              Center(
+                child: Text(
+                  "Your review was added",
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
+            ],
+          );
+        });
   }
 }

@@ -6,244 +6,46 @@ import 'package:cineticketfinal/Ticket.dart';
 
 class MovieRepo {
   static final _seatChart = [
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    null,
     //new Line
-    null,
-    null,
-    1,
-    1,
-    0,
-    0,
-    0,
-    0,
-    0,
-    -2,
+    null, null, 1, 1, 0, 0, 0, 0, 0, -2,
     //new Line
-    null,
-    0,
-    1,
-    1,
-    0,
-    1,
-    0,
-    0,
-    0,
-    -2,
+    null, 0, 1, 1, 0, 1, 0, 0, 0, -2,
     //new line
-    0,
-    0,
-    0,
-    1,
-    0,
-    0,
-    0,
-    0,
-    0,
-    -2,
+    0, 0, 0, 1, 0, 0, 0, 0, 0, -2,
     //new line
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    1,
-    0,
-    0,
-    -2,
+    0, 0, 0, 0, 0, 0, 1, 0, 0, -2,
     //new line
-    0,
-    0,
-    0,
-    1,
-    1,
-    0,
-    0,
-    0,
-    0,
-    -2,
+    0, 0, 0, 1, 1, 0, 0, 0, 0, -2,
     //new line
-    0,
-    0,
-    0,
-    1,
-    0,
-    0,
-    0,
-    0,
-    0,
-    -2,
+    0, 0, 0, 1, 0, 0, 0, 0, 0, -2,
     //new line
-    0,
-    0,
-    0,
-    1,
-    0,
-    0,
-    0,
-    0,
-    0,
-    -2,
+    0, 0, 0, 1, 0, 0, 0, 0, 0, -2,
     //new line
-    0,
-    0,
-    0,
-    1,
-    0,
-    0,
-    0,
-    0,
-    0,
-    -2,
+    0, 0, 0, 1, 0, 0, 0, 0, 0, -2,
     //new line
-    0,
-    0,
-    0,
-    1,
-    1,
-    0,
-    0,
-    0,
-    0,
-    -2,
+    0, 0, 0, 1, 1, 0, 0, 0, 0, -2,
     //new line
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    -2,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, -2,
     //new line
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    -2,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, -2,
     //new line
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    -2,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, -2,
     //new line
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    -2,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, -2,
     //new line
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    -2,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, -2,
     //new line
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    -2,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, -2,
     //new line
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    -2,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, -2,
     //new line
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    -2, //new line
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    -2,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, -2,
     //new line
-    null,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    -2,
-    null,
-    null,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    -2,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    null
+    0, 0, 0, 0, 0, 0, 0, 0, 0, -2,
+    //new line
+    null, 0, 0, 0, 0, 0, 0, 0, 0, -2,
+    //new line
+    null, null, 0, 0, 0, 0, 0, 0, 0, -2
   ];
 
   static final _cinemas = [
@@ -912,6 +714,7 @@ class MovieRepo {
       }
       return res;
     }
+    return null;
   }
 
   static List<Review> getReviewsFrom(String username) {
@@ -928,17 +731,17 @@ class MovieRepo {
     return res;
   }
 
-  static List<Ticket> getExpired() {
-    List<Ticket> expired = [];
-
-    for (Ticket t in _tickets) {
-      if (int.parse(t.getDate().substring(0, 2)) < 20 &&
-          int.parse(t.getDate().substring(3, 5)) < 6 &&
-          int.parse(t.getDate().substring(6, 10)) < 20) {
-        expired.add(t);
+  static bool removeReview(String un, Review revies) {
+    for (Movie m in _allMovies) {
+      for (Review r in m.getReviews()) {
+        if (identical(r.getReview(), revies.getReview()) && r.getRating() == revies.getRating()) {
+          m.deleteReview(r);
+        }
       }
     }
   }
 
-  static List<Ticket> getComingUp() {}
+
+
+
 }

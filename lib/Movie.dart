@@ -205,15 +205,14 @@ class Movie {
   }
 
   List<int> reviewsCount() {
-    List<int> result = new List.generate(10, (i) => 0);
-    int rate;
-
-    for (Review r in this.reviews) {
-      rate = (r.getRating() * 2 - 1).toInt();
-      result[rate]++;
-    }
-
-    //return result;
     return [2, 4, 5, 6, 7, 1, 0, 5, 4, 6];
+  }
+
+  void deleteReview(Review revies) {
+    for (Review r in reviews) {
+      if (identical(r.getReview(), revies.getReview()) && r.getRating() == revies.getRating()) {
+        reviews.remove(r);
+      }
+    }
   }
 }

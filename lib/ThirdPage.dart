@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'MovieRepo.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+import 'MovieRepo.dart';
 import 'Ticket.dart';
 
 class ThirdPage extends StatefulWidget {
@@ -23,10 +24,7 @@ class _ThirdPage extends State<ThirdPage> {
     return Scaffold(
       appBar: CupertinoNavigationBar(
         transitionBetweenRoutes: false,
-        leading: GestureDetector(
-          child: Icon(Icons.tune),
-          onTap: () {},
-        ),
+        leading: Container(),
         middle: Text("Tickets"),
         trailing: Icon(Icons.help_outline),
       ),

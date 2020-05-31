@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import 'Login.dart';
 import 'MyReviews.dart';
@@ -52,7 +52,10 @@ class MapScreenState extends State<Profile>
                             children: <Widget>[
                               Padding(
                                 padding: EdgeInsets.only(right: 60, left: 5),
-                                child: new FlatButton(
+                                child: new OutlineButton(
+                                  borderSide: BorderSide(
+                                      color: Color.fromRGBO(147, 172, 243, 1),
+                                      width: 2),
                                   onPressed: () {
                                     Navigator.push(
                                         context,
@@ -60,12 +63,15 @@ class MapScreenState extends State<Profile>
                                             builder: (context) =>
                                                 MyReviews("Albino Anselmo")));
                                   },
-                                  child: Text('Reviews'),
+                                  child: Text('My Reviews'),
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsets.only(left: 60, right: 5),
-                                child: new FlatButton(
+                                child: new OutlineButton(
+                                  borderSide: BorderSide(
+                                      color: Color.fromRGBO(147, 172, 243, 1),
+                                      width: 2),
                                   onPressed: () {
                                     showDialog(
                                       context: context,
@@ -350,11 +356,11 @@ class MapScreenState extends State<Profile>
     return new GestureDetector(
       child: new CircleAvatar(
         backgroundColor: Colors.red,
-        radius: 14.0,
+        radius: 16.0,
         child: new Icon(
           Icons.edit,
           color: Colors.white,
-          size: 16.0,
+          size: 18.0,
         ),
       ),
       onTap: () {

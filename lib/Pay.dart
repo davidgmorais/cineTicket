@@ -17,6 +17,7 @@ class Pay extends StatefulWidget {
 }
 
 int _selected = 0;
+List<int> seatChart;
 
 class _Pay extends State<Pay> {
   Ticket ticket;
@@ -35,6 +36,8 @@ class _Pay extends State<Pay> {
     child = ticket.getChild();
     senior = ticket.getSenior();
     twofer = ticket.getTwofer();
+
+    seatChart = MovieRepo.getSeatCart();
 
     return Scaffold(
       appBar: CupertinoNavigationBar(
@@ -310,7 +313,9 @@ class _Pay extends State<Pay> {
             onPressed: () {
               setState(() {
                 MovieRepo.addTicket(ticket);
-
+                for (int i in seatChart) {
+                  if (i == -1) i = 1;
+                }
                 Navigator.push(context,
                     PageRouteBuilder(pageBuilder: (_, a1, a2) => Complete()));
               });

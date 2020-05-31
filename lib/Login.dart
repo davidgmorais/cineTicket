@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'main.dart';
 
 class Login extends StatefulWidget {
@@ -21,7 +23,7 @@ class _LoginPageState extends State<Login> {
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-              colors: [Colors.white, Colors.lightBlue[50]],
+              colors: [Colors.white, Colors.amber[50]],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter),
         ),
@@ -104,11 +106,19 @@ class _LoginPageState extends State<Login> {
     return Container(
       margin: EdgeInsets.only(top: 50.0),
       padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
-      child: Text("CineTicket",
-          style: TextStyle(
-              color: Colors.black,
-              fontSize: 40.0,
-              fontWeight: FontWeight.bold)),
+      child: Row(
+        children: <Widget>[
+          Image.asset(
+            "assets/images/Cineticket_logo.png",
+            width: 110,
+          ),
+          Text("CineTicket",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 45.0,
+                  fontWeight: FontWeight.bold)),
+        ],
+      ),
     );
   }
 }

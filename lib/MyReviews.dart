@@ -1,9 +1,8 @@
-import 'package:cineticketfinal/Movie.dart';
 import 'package:cineticketfinal/MovieRepo.dart';
-import 'package:cineticketfinal/SecondPage.dart';
+import 'package:cineticketfinal/Review.dart';
+import 'package:cineticketfinal/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:cineticketfinal/Review.dart';
 
 class MyReviews extends StatefulWidget {
   String _un;
@@ -109,7 +108,7 @@ class _myReviews extends State<MyReviews> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => SecondPage()));
+                                builder: (context) => MyHomePage(1)));
                       },
                       color: Color.fromRGBO(147, 172, 243, 1),
                       padding:
